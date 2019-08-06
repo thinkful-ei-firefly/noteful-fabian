@@ -1,4 +1,5 @@
 import React from 'react';
+import './NoteMain.css';
 
 class NoteMain extends React.Component{
 	static defaultProps = {
@@ -6,15 +7,14 @@ class NoteMain extends React.Component{
 	}
 
 	render(){
-		console.log(this.props.note);
 		return(
 			<div>
-				<div>
+				<div className='note'>
 					<h3>{this.props.note.name}</h3>
-					<p>{this.props.note.modified}</p>
-					<button>Delete Note</button>
+					<p>Modified {(new Date(this.props.note.modified).toLocaleString())}</p>
+					<button className='button-delete'>Delete Note</button>
 				</div>
-				<div>
+				<div className='content-note'>
 					{this.props.note.content}
 				</div>
 			</div>

@@ -7,7 +7,6 @@ function Header(){
 			<NavLink to='/'>
 	        	<h1>Noteful</h1>
 	      	</NavLink>
-			
 		</div>
 		);
 }

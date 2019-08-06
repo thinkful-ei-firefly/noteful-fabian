@@ -1,4 +1,5 @@
 import React from 'react';
+import './NoteSidebar.css';
 
 class NoteSidebar extends React.Component{
 	static defaultProps = {
@@ -6,13 +7,12 @@ class NoteSidebar extends React.Component{
 	}
 
 	render(){
-		console.log(this.props.folder);
 		return(
 			<div>
-				<h2>{this.props.folder.name}</h2>
-		         <button onClick={this.props.history.goBack}>
+				<button className='button-back' onClick={this.props.history.goBack}>
 		            Back
 		         </button>
+				<h2>{this.props.folder.name}</h2>
 			</div>
 			);
 	}
