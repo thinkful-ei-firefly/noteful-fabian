@@ -1,26 +1,61 @@
 import React from 'react';
-import logo from './logo.svg';
+import {Route} from 'react-router-dom';
 import './App.css';
+import Header from './components/Header';
+import MainSidebar from './components/MainSidebar';
+import NoteSidebar from './components/NoteSidebar';
+import MainMain from './components/MainMain';
+import NoteMain from './components/NoteMain';
+import Store from './store';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  constructor(props) { // Called before component mounts
+      super(props);
+      this.state = Store
+  }
+
+  render(){
+      return (
+        <div className="App">
+          <Header />
+          <div className='sidebar'>
+            <Route exact path='/' render={(routerProps) =>
+              <MainSidebar
+                folders={this.state.folders}
+              />
+            }/>
+            <Route path='/folder/:folderId' render={(routerProps) =>
+              <MainSidebar {...routerProps}
+                folders={this.state.folders}
+              />
+            }/>
+            <Route path='/note/:noteId' render={(routerProps) =>
+              <NoteSidebar {...routerProps}
+                folder={this.state.folders.find(folder => folder.id===this.state.notes.find(note => note.id === routerProps.match.params.noteId).folderId)}
+              />
+            }/>
+          </div>
+          <div className='main'>
+            <Route exact path='/' render={(routerProps) =>
+              <MainMain 
+                notes={this.state.notes}
+              />
+            }/>
+            <Route path='/folder/:folderId' render={(routerProps) =>
+              <MainMain 
+                notes={this.state.notes.filter(note => note.folderId === routerProps.match.params.folderId)}
+              />
+            }/>
+            <Route path='/note/:noteId' render={(routerProps) =>
+              <NoteMain
+                note={this.state.notes.find(note => note.id === routerProps.match.params.noteId)}
+              />
+            }/>
+          </div>
+        </div>
+      );
+    
+  }
 }
 
 export default App;
